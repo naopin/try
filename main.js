@@ -1,7 +1,6 @@
 let result = document.getElementById('result');
 
 const ul = document.createElement("ul");
-const li = document.createElement('li');
 result.appendChild(ul);
 
 function clickSubmit() {
@@ -23,19 +22,21 @@ function clickSubmit() {
     }
 
     if (Number.isInteger(fizzNumber) === true && Number.isInteger(buzzNumber) === true) {
+        result.appendChild(ul);
         for (let i = 1; i <= 100; i++) {
             let fizz = fizzNumber;
             let buzz = buzzNumber;
+            const li = document.createElement('li');
+            ul.appendChild(li);
             if (i % fizz === 0 && i % buzz === 0) {
-                array += "<li>" + "FizzBuzz" + i + "</li>";
+                li.textContent = ("FizzBuzz" + i);
             } else if (i % fizz === 0) {
-                array += "<li>" + "Fizz" + i + "</li>";
+                li.textContent = ("Fizz" + i);
             } else if (i % buzz === 0) {
-                array += "<li>" + "Buzz" + i + "</li>";
+                li.textContent = ("Buzz" + i);
             }
         }
-        result.appendChild(ul);
-        ul.innerHTML = array ;
+        console.log(ul);
     } else {
         result.innerText = "整数値を入力してください";
     }
