@@ -29,7 +29,7 @@ function showTodos() {
         tdIndex.textContent = index + 1;
         tr.appendChild(tdIndex);
 
-        // 連想配列からkeyを順番に取り出してvalue(各td)をappend指定く
+        // 連想配列からkeyを順番に取り出してvalue(各td)をappend指定
         for (key in todoDict) {
             tr.appendChild(todoDict[key]);          
         }
