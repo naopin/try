@@ -12,6 +12,7 @@ addButton.addEventListener('click', () => {
     inputBox.value = '';
     //  配列にテキスト格納
     todos.push(getTodoTdDict(todo));
+    console.log(todos);
     showTodos();
 });
 
@@ -53,6 +54,10 @@ function getTodoTdDict(todo) {
     deleteButton.textContent = '削除';
     tdDeleteButton.appendChild(deleteButton);
 
+    // todoDict["todo"](or todoDict.todo)でtodoの値=tdTodoにアクセスできる
     const todoDict = {todo:tdTodo, progressButton:tdProgressButton, deleteButton:tdDeleteButton};
+
+    // todoList[1]でtodoの値=tdTodoにアクセスできる
+    const todoList = [tdTodo, tdProgressButton, tdDeleteButton]
     return todoDict;
 }
