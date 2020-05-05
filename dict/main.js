@@ -1,6 +1,3 @@
-
-
-// 今回こいつを連想配列のリストとして扱う
 const todos = [];
 const inputBox = document.getElementById('input');
 const addButton = document.getElementById('add-button');
@@ -12,52 +9,49 @@ addButton.addEventListener('click', () => {
     inputBox.value = '';
     //  配列にテキスト格納
     todos.push(getTodoTdDict(todo));
-    console.log(todos);
     showTodos();
+    
 });
-
 //配列を出力:テーブルに追加
 function showTodos() {
     // tbodyの中身を空にする
     while (tBody.firstChild) {
         tBody.removeChild(tBody.firstChild);
     }
-    // todoDictに連想配列が入る
     todos.forEach((todoDict, index) => {
-        // IDは配列のindexをそのまま持ってくる
         const tr = document.createElement('tr');
-        const tdIndex = document.createElement('td');
-        tdIndex.textContent = index + 1;
-        tr.appendChild(tdIndex);
-
-        // 連想配列からkeyを順番に取り出してvalue(各td)をappend指定
+        const tdNum = document.createElement('td');
+        tdNum.textContent = index + 1;
+        tr.appendChild(tdNum);
         for (key in todoDict) {
             tr.appendChild(todoDict[key]);          
         }
-
         tBody.appendChild(tr);
     });
 }
-
 // todoの連想配列を作って返す関数
 function getTodoTdDict(todo) {
-    const tdTodo = document.createElement('td');
-    tdTodo.textContent = todo;
-
-    const tdProgressButton = document.createElement('td');
+    const tdComment = document.createElement('td');
+    tdComment.textContent = todo;
+    const tdProgress = document.createElement('td');
     const progressButton = document.createElement('button');
     progressButton.textContent = '作業中';
-    tdProgressButton.appendChild(progressButton);
+    tdProgress.appendChild(progressButton);
+    const tdDelete = document.createElement('td');
+    const deleteButton = createDeleteBtn();
 
-    const tdDeleteButton = document.createElement('td');
+    tdDelete.appendChild(deleteButton);
+    // todoDict["todo"](or todoDict.todo)でtodoの値=tdTodoにアクセスできる
+    const todoDict = {todo:tdComment, progressButton:tdProgress, deleteButton:tdDelete};
+    return todoDict;
+}
+
+function createDeleteBtn() {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '削除';
-    tdDeleteButton.appendChild(deleteButton);
-
-    // todoDict["todo"](or todoDict.todo)でtodoの値=tdTodoにアクセスできる
-    const todoDict = {todo:tdTodo, progressButton:tdProgressButton, deleteButton:tdDeleteButton};
-
-    // todoList[1]でtodoの値=tdTodoにアクセスできる
-    const todoList = [tdTodo, tdProgressButton, tdDeleteButton]
-    return todoDict;
+    deleteButton.addEventListener('click', (todoDict) => {
+        todos.splice(todoDict, 1);
+        showTodos();
+    });
+    return deleteButton;
 }
